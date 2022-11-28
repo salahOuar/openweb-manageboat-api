@@ -6,6 +6,7 @@ Spring Boot, boat management application :
 - We can create, retrieve, update, delete Boats.
 
 ![Open api swagger](https://github.com/salahOuar/openweb-manageboat-api/blob/main/src/main/resources/static/swagger.png)
+![swagger file](src/main/resources/openapi.yaml)
 
 ## Run Spring Boot application
 ```
