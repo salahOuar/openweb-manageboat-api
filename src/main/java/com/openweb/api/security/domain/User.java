@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.openweb.api.boat.domain.Boat;
 import com.openweb.api.shared.AbstractAuditingEntity;
 import lombok.Data;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -26,7 +24,6 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "login"),
                 @UniqueConstraint(columnNames = "email")
         })
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Data
 public class User extends AbstractAuditingEntity implements Serializable {
 
