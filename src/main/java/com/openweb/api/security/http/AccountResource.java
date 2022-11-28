@@ -7,6 +7,10 @@ import com.openweb.api.security.repository.UserRepository;
 import com.openweb.api.security.service.UserService;
 import com.openweb.api.security.util.CookieUtil;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,23 +54,21 @@ public class AccountResource {
      * @return the current user.
      * @throws AccountResourceException {@code 404 } if the user couldn't be returned.
      */
+    @Operation(summary = "Retrieve current user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "The current user data", content = {@Content(mediaType = "application/json")}), @ApiResponse(responseCode = "404", description = "User could not be found", content = @Content)})
     @RateLimiter(name = "rateLimiterApi")
     @GetMapping("/account")
     public UserDTO getAccount() {
-        try {
-            UserDTO userDTO = userService.getUserWithAuthorities().map(user -> new UserDTO(user)).orElseThrow(() -> new AccountResourceException("User could not be found"));
-            return userDTO;
-        } catch (Exception e) {
-            throw e;
-        }
+        return userService.getUserWithAuthorities().map(user -> new UserDTO(user)).orElseThrow(() -> new AccountResourceException("User could not be found"));
     }
 
     /**
-     *
      * @param request
      * @param response
      * @return
      */
+    @Operation(summary = "Log out current user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "The current user has been successfully logged out", content = {@Content(mediaType = "application/json")})})
     @RateLimiter(name = "rateLimiterApi")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {

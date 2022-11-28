@@ -1,12 +1,17 @@
 package com.openweb.api.security.http;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.openweb.api.boat.dto.BoatDTO;
 import com.openweb.api.security.dto.LoginDTO;
 import com.openweb.api.security.jwt.TokenProvider;
 import com.openweb.api.security.service.UserService;
 import com.openweb.api.security.util.CookieUtil;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +47,8 @@ public class UserJWTController {
         this.cookieUtil = cookieUtil;
     }
 
+    @Operation(summary = "Authenticate user")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "The user was successfully authenticated", content = {@Content(mediaType = "application/json")}), @ApiResponse(responseCode = "400", description = "Invalid login data", content = @Content)})
     @PostMapping("/authenticate")
     @RateLimiter(name = "rateLimiterApi")
     public ResponseEntity authorize(@Valid @RequestBody LoginDTO loginDTO) {

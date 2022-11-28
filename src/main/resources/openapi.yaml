@@ -91,14 +91,13 @@ paths:
     post:
       tags:
         - account-resource
+      summary: Log out current user
       operationId: logout
       responses:
         '200':
-          description: OK
+          description: The current user has been successfully logged out
           content:
-            '*/*':
-              schema:
-                type: string
+            application/json: {}
         '401':
           description: Unauthorized
         '429':
@@ -150,6 +149,7 @@ paths:
     post:
       tags:
         - user-jwt-controller
+      summary: Authenticate user
       operationId: authorize
       requestBody:
         content:
@@ -159,11 +159,11 @@ paths:
         required: true
       responses:
         '200':
-          description: OK
+          description: The user was successfully authenticated
           content:
-            '*/*':
-              schema:
-                type: string
+            application/json: {}
+        '400':
+          description: Invalid login data
         '401':
           description: Unauthorized
         '429':
@@ -172,16 +172,17 @@ paths:
     get:
       tags:
         - account-resource
+      summary: Retrieve current user
       operationId: getAccount
       responses:
         '200':
-          description: OK
+          description: The current user data
           content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UserDTO'
+            application/json: {}
         '401':
           description: Unauthorized
+        '404':
+          description: User could not be found
         '429':
           description: Too Many Requests
 components:
@@ -213,38 +214,3 @@ components:
           maxLength: 100
           minLength: 4
           type: string
-    UserDTO:
-      required:
-        - login
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        login:
-          maxLength: 50
-          minLength: 1
-          type: string
-        firstName:
-          maxLength: 50
-          minLength: 0
-          type: string
-        lastName:
-          maxLength: 50
-          minLength: 0
-          type: string
-        email:
-          maxLength: 254
-          minLength: 5
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-        lastModifiedDate:
-          type: string
-          format: date-time
-        authorities:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
