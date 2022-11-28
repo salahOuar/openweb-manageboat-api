@@ -11,4 +11,4 @@ Spring Boot, boat management application in which one can:
 ```
 mvn spring-boot:run
 ```
-The Spring Boot Server will export API at port `8080`.``
+The Spring Boot Server will export API at port `8080`.
