@@ -1,7 +1,7 @@
 # openweb-manageboat-api
 # Boat management application
 
-Spring Boot, boat management application in which one can:
+Spring Boot, boat management application :
 - Each Boat has id, name, description
 - We can create, retrieve, update, delete Boats.
 
