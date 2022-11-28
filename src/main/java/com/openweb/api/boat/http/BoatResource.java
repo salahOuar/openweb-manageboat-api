@@ -24,11 +24,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/boats")
 @Slf4j
-public class BoatController {
+public class BoatResource {
 
     private final BoatService boatService;
 
-    BoatController(BoatService boatService) {
+    BoatResource(BoatService boatService) {
         this.boatService = boatService;
     }
 

@@ -26,7 +26,7 @@ public class OpenWebGuardBoatAspect {
     }
 
     @Around("@annotation(OpenWebGuardBoat)")
-    public Object guardCommunity(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object guardBoat(ProceedingJoinPoint joinPoint) throws Throwable {
         //only the owner of the resource can update or delete it
         if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0 && joinPoint.getArgs()[0] != null && joinPoint.getArgs()[0] instanceof Long) {
             Long boatId = (Long) joinPoint.getArgs()[0];

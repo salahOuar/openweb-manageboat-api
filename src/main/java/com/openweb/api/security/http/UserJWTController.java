@@ -1,7 +1,6 @@
 package com.openweb.api.security.http;
 
 
-import com.openweb.api.boat.dto.BoatDTO;
 import com.openweb.api.security.dto.LoginDTO;
 import com.openweb.api.security.jwt.TokenProvider;
 import com.openweb.api.security.service.UserService;
@@ -9,7 +8,6 @@ import com.openweb.api.security.util.CookieUtil;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpHeaders;
