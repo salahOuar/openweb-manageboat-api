@@ -1,0 +1,250 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/boats/{id}:
+    get:
+      tags:
+        - boat-controller
+      summary: Get a boat by its id
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          description: id of boat to be searched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Found the boat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoatDTO'
+        '400':
+          description: Invalid boat data
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+    put:
+      tags:
+        - boat-controller
+      summary: Update a boat
+      operationId: updateBoat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoatDTO'
+        required: true
+      responses:
+        '200':
+          description: The boat was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoatDTO'
+        '400':
+          description: Invalid boat data
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+    delete:
+      tags:
+        - boat-controller
+      summary: Delete a boat
+      operationId: deleteBoat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The boat was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoatDTO'
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+  /api/logout:
+    post:
+      tags:
+        - account-resource
+      operationId: logout
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+  /api/boats:
+    get:
+      tags:
+        - boat-controller
+      summary: retrieve user's boats
+      operationId: all
+      responses:
+        '200':
+          description: Successfully Retrieve user's boats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoatDTO'
+        '400':
+          description: Invalid boat data
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+    post:
+      tags:
+        - boat-controller
+      summary: Creation of a new boat
+      operationId: newBoat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoatDTO'
+        required: true
+      responses:
+        '201':
+          description: The boat was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoatDTO'
+        '400':
+          description: Invalid boat data
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+  /api/authenticate:
+    post:
+      tags:
+        - user-jwt-controller
+      operationId: authorize
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+  /api/account:
+    get:
+      tags:
+        - account-resource
+      operationId: getAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+components:
+  schemas:
+    BoatDTO:
+      required:
+        - description
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+    LoginDTO:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          maxLength: 50
+          minLength: 1
+          type: string
+        password:
+          maxLength: 100
+          minLength: 4
+          type: string
+    UserDTO:
+      required:
+        - login
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        login:
+          maxLength: 50
+          minLength: 1
+          type: string
+        firstName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        lastName:
+          maxLength: 50
+          minLength: 0
+          type: string
+        email:
+          maxLength: 254
+          minLength: 5
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+        authorities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
